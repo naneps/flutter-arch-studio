@@ -1,6 +1,15 @@
+import { useState } from 'react'
 import styles from './Header.module.css'
 
-export default function Header({ arch, state, fileCount, onHelp, theme, toggleTheme }) {
+export default function Header({ arch, state, fileCount, onHelp, theme, toggleTheme, onShare }) {
+  const [toastVisible, setToastVisible] = useState(false)
+
+  const handleShare = () => {
+    onShare?.()
+    setToastVisible(true)
+    setTimeout(() => setToastVisible(false), 2200)
+  }
+
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -13,12 +22,21 @@ export default function Header({ arch, state, fileCount, onHelp, theme, toggleTh
         <span className={styles.metaTag}>{arch}</span>
         <span className={styles.separator}>+</span>
         <span className={styles.metaTag}>{state}</span>
+        <button className={styles.shareBtn} onClick={handleShare} title="Share this config via URL">
+          🔗 Share
+        </button>
         <button className={styles.themeBtn} onClick={toggleTheme}>
           {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
         </button>
         <button className={styles.helpBtn} onClick={onHelp}>? Guide</button>
         <span className={styles.badge}>v2.0</span>
       </div>
+
+      {toastVisible && (
+        <div className={styles.toast}>
+          ✓ Link copied to clipboard!
+        </div>
+      )}
     </header>
   )
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ARCHITECTURES, STATE_MANAGERS } from '../data/constants.js'
 import { getCompatibilityNote } from '../data/recommendations.js'
+import { highlightDart } from '../utils/highlighter.js'
 import styles from './DocsPanel.module.css'
 
 function ArchDoc({ arch }) {
@@ -122,31 +123,31 @@ export default function DocsPanel({ arch, state }) {
       <div className={styles.content}>
         {section === 'intro' && (
           <div>
-            <div className={styles.sectionTitle}>Introduction & Usage Guide</div>
-            <div style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.7' }}>
+            <div className={styles.sectionTitle}>Introduction &amp; Usage Guide</div>
+            <div className={styles.introText}>
               <p>Welcome to <b>Flutter Arch Studio</b>! This web tool is designed to accelerate your Flutter development by generating clean, production-ready boilerplate code instantly.</p>
 
-              <h3 style={{ color: '#e2e8f0', marginTop: '24px', marginBottom: '12px', fontSize: '16px' }}>🚀 How to Use</h3>
-              <ol style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <h3 className={styles.introH3}>🚀 How to Use</h3>
+              <ol className={styles.introList}>
                 <li><b>Configure Project:</b> Use the left panel to set your project name and organization ID.</li>
                 <li><b>Select Architecture:</b> Choose a design pattern that fits your team size and scaling needs (e.g. Clean Architecture, MVVM).</li>
                 <li><b>Pick State Management:</b> Select your preferred reactive framework (BLoC, Riverpod, GetX, etc).</li>
                 <li><b>Toggle Features:</b> Enable pre-configured modules like Authentication, Networking, or Local Storage.</li>
-                <li><b>Preview & Download:</b> Explore the generated file tree on the right. Once satisfied, click the Download button to get your <code>.zip</code> file.</li>
+                <li><b>Preview &amp; Download:</b> Explore the generated file tree on the right. Once satisfied, click the Download button to get your <code>.zip</code> file.</li>
               </ol>
 
-              <h3 style={{ color: '#e2e8f0', marginTop: '24px', marginBottom: '12px', fontSize: '16px' }}>💻 Post-Download Setup</h3>
-              <div style={{ background: '#111118', padding: '16px', borderRadius: '8px', border: '1px solid #2a2a38' }}>
-                <code style={{ color: '#10b981', fontFamily: 'var(--font-mono)', whiteSpace: 'pre-wrap' }}>
+              <h3 className={styles.introH3}>💻 Post-Download Setup</h3>
+              <div className={styles.setupBlock}>
+                <code className={styles.setupCode}>
                   1. Extract the downloaded .zip file into an empty folder<br />
                   2. Open the folder in your terminal<br />
                   3. Run <b>sh setup.sh</b> or <b>setup.bat</b> (Windows)<br />
-                  &nbsp;&nbsp;&nbsp;<i>(This generates platform folders like iOS/Android & runs pub get)</i><br />
+                  &nbsp;&nbsp;&nbsp;<i>(This generates platform folders like iOS/Android &amp; runs pub get)</i><br />
                   4. Run <b>flutter run</b>
                 </code>
               </div>
 
-              <p style={{ marginTop: '20px' }}>
+              <p className={styles.introFooter}>
                 Navigate to the other tabs in this documentation panel to learn more about the specific architectures and state management options you can choose from.
               </p>
             </div>
@@ -234,9 +235,15 @@ export default function DocsPanel({ arch, state }) {
             <StateDoc sm={currentState} />
 
             <div className={styles.codeExample}>
-              <div className={styles.codeExTitle}>Pattern Snapshot</div>
+              <div className={styles.codeExHeader}>
+                <span className={styles.codeExTitle}>Pattern Snapshot</span>
+                <span className={styles.codeExLang}>dart</span>
+              </div>
               {state === 'bloc' && (
-                <pre className={styles.codeEx}>{`// 1. Define state
+                <pre
+                  className={styles.codeEx}
+                  dangerouslySetInnerHTML={{
+                    __html: highlightDart(`// 1. Define state
 abstract class AuthState {}
 class AuthLoading extends AuthState {}
 class AuthSuccess extends AuthState { final User user; ... }
@@ -244,7 +251,7 @@ class AuthSuccess extends AuthState { final User user; ... }
 // 2. Cubit (simplified BLoC)
 class AuthCubit extends Cubit<AuthState> {
   Future<void> login(email, pass) async {
-    emit(AuthLoading());           // ← emit state
+    emit(AuthLoading());           // emit state
     final result = await useCase(LoginParams(email, pass));
     result.fold(
       (failure) => emit(AuthError(failure.message)),
@@ -260,10 +267,15 @@ BlocBuilder<AuthCubit, AuthState>(
     if (state is AuthSuccess) return HomeScreen();
     return LoginForm();
   },
-)`}</pre>
+)`)
+                  }}
+                />
               )}
               {state === 'riverpod' && (
-                <pre className={styles.codeEx}>{`// 1. Define notifier (with code gen)
+                <pre
+                  className={styles.codeEx}
+                  dangerouslySetInnerHTML={{
+                    __html: highlightDart(`// 1. Define notifier (with code gen)
 @riverpod
 class AuthNotifier extends _$AuthNotifier {
   @override
@@ -288,10 +300,15 @@ class LoginPage extends ConsumerWidget {
       error: (e, _) => Text(e.toString()),
     );
   }
-}`}</pre>
+}`)
+                  }}
+                />
               )}
               {state === 'provider' && (
-                <pre className={styles.codeEx}>{`// 1. ViewModel
+                <pre
+                  className={styles.codeEx}
+                  dangerouslySetInnerHTML={{
+                    __html: highlightDart(`// 1. ViewModel
 class AuthViewModel extends ChangeNotifier {
   User? _user;
   bool _loading = false;
@@ -301,7 +318,7 @@ class AuthViewModel extends ChangeNotifier {
 
   Future<void> login(String email, String password) async {
     _loading = true;
-    notifyListeners();         // ← trigger rebuild
+    notifyListeners();         // trigger rebuild
     _user = await authService.login(email, password);
     _loading = false;
     notifyListeners();
@@ -314,19 +331,24 @@ Consumer<AuthViewModel>(
     if (vm.loading) return CircularProgressIndicator();
     return LoginForm(onSubmit: vm.login);
   },
-)`}</pre>
+)`)
+                  }}
+                />
               )}
               {state === 'getx' && (
-                <pre className={styles.codeEx}>{`// 1. Controller
+                <pre
+                  className={styles.codeEx}
+                  dangerouslySetInnerHTML={{
+                    __html: highlightDart(`// 1. Controller
 class AuthController extends GetxController {
-  final user = Rx<User?>(null);    // ← reactive
+  final user = Rx<User?>(null);    // reactive
   final isLoading = false.obs;
 
   Future<void> login(String email, String password) async {
     isLoading.value = true;
     try {
       user.value = await authService.login(email, password);
-      Get.offAllNamed('/home');    // ← navigate
+      Get.offAllNamed('/home');    // navigate
     } catch (e) {
       Get.snackbar('Error', e.toString());
     } finally { isLoading.value = false; }
@@ -336,12 +358,14 @@ class AuthController extends GetxController {
 // 2. UI
 class LoginView extends GetView<AuthController> {
   @override
-  Widget build(context) => Obx(() =>   // ← auto-rebuild
+  Widget build(context) => Obx(() =>   // auto-rebuild
     controller.isLoading.value
       ? CircularProgressIndicator()
       : LoginForm(onSubmit: controller.login),
   );
-}`}</pre>
+}`)
+                  }}
+                />
               )}
             </div>
           </div>

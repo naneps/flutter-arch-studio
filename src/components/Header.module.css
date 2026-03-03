@@ -4,11 +4,16 @@
   justify-content: space-between;
   padding: 14px 28px;
   border-bottom: 1px solid var(--border);
-  background: rgba(17, 17, 24, 0.95);
-  backdrop-filter: blur(12px);
+  background: rgba(17, 17, 24, 0.85);
+  backdrop-filter: blur(16px);
   flex-shrink: 0;
   z-index: 10;
   position: relative;
+  animation: fadeSlideIn 0.4s ease both;
+}
+
+[data-theme='light'] .header {
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .logo {
@@ -18,6 +23,11 @@
   font-size: 18px;
   font-weight: 800;
   letter-spacing: -0.3px;
+  transition: opacity 0.2s;
+}
+
+.logo:hover {
+  opacity: 0.85;
 }
 
 .logoIcon {
@@ -29,6 +39,12 @@
   align-items: center;
   justify-content: center;
   font-size: 16px;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.logo:hover .logoIcon {
+  box-shadow: 0 0 18px rgba(0, 212, 255, 0.5);
+  transform: rotate(-5deg) scale(1.08);
 }
 
 .accent {
@@ -49,6 +65,7 @@
   border: 1px solid var(--border);
   padding: 3px 10px;
   border-radius: 5px;
+  transition: color 0.2s, border-color 0.2s;
 }
 
 .badge {
@@ -74,7 +91,7 @@
   border-radius: 6px;
   font-size: 11px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.2s;
   font-family: var(--font-mono);
 }
 
@@ -82,4 +99,47 @@
 .themeBtn:hover {
   border-color: var(--accent);
   color: var(--accent);
+  background: rgba(0, 212, 255, 0.06);
+}
+
+.shareBtn {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(124, 58, 237, 0.15));
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  color: var(--accent);
+  padding: 4px 14px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.shareBtn:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.28), rgba(124, 58, 237, 0.28));
+  border-color: var(--accent);
+  box-shadow: 0 0 14px rgba(0, 212, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.shareBtn:active {
+  transform: translateY(0);
+}
+
+/* Toast */
+.toast {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 28px;
+  background: var(--surface2);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 212, 255, 0.15);
+  animation: toastIn 0.25s ease both;
+  z-index: 100;
+  white-space: nowrap;
 }

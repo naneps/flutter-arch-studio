@@ -10,8 +10,18 @@
   --text: #e2e8f0;
   --muted: #64748b;
   --dart: #54c5f8;
+  --code-bg: #0d1117;
   --font-mono: 'JetBrains Mono', monospace;
   --font-display: 'Syne', sans-serif;
+  /* Syntax highlight token colors — dark */
+  --hl-keyword: #c792ea;
+  --hl-type: #82aaff;
+  --hl-function: #82cfff;
+  --hl-string: #c3e88d;
+  --hl-comment: #546e7a;
+  --hl-number: #f78c6c;
+  --hl-annotation: #ffcb6b;
+  --hl-punct: #89ddff;
 }
 
 :root[data-theme='light'] {
@@ -26,6 +36,16 @@
   --text: #0f172a;
   --muted: #64748b;
   --dart: #0369a1;
+  --code-bg: #f8fafc;
+  /* Syntax highlight token colors — light */
+  --hl-keyword: #7c3aed;
+  --hl-type: #0369a1;
+  --hl-function: #0284c7;
+  --hl-string: #166534;
+  --hl-comment: #94a3b8;
+  --hl-number: #c2410c;
+  --hl-annotation: #b45309;
+  --hl-punct: #475569;
 }
 
 * {
@@ -47,16 +67,79 @@ body {
   font-family: var(--font-display);
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(0, 212, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.025) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: 0;
+/* Global keyframes */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bouncePill {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.18);
+  }
+
+  70% {
+    transform: scale(0.93);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmerBorder {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
 
 ::-webkit-scrollbar {
@@ -80,4 +163,42 @@ pre {
 button {
   font-family: var(--font-display);
   cursor: pointer;
+}
+
+/* Global syntax highlight token classes — used by DocsPanel and CodePreview */
+.hl-keyword {
+  color: var(--hl-keyword);
+}
+
+.hl-type {
+  color: var(--hl-type);
+}
+
+.hl-string {
+  color: var(--hl-string);
+}
+
+.hl-number {
+  color: var(--hl-number);
+}
+
+.hl-comment {
+  color: var(--hl-comment);
+  font-style: italic;
+}
+
+.hl-function {
+  color: var(--hl-function);
+}
+
+.hl-annotation {
+  color: var(--hl-annotation);
+}
+
+.hl-punctuation {
+  color: var(--hl-punct);
+}
+
+.hl-yaml-key {
+  color: var(--hl-type);
 }
