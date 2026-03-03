@@ -3,7 +3,7 @@ import styles from './WelcomeModal.module.css'
 
 const STEPS = [
   {
-    icon: '🏗️',
+    icon: <img src="/favicon.png" alt="Logo" style={{ width: '48px', height: '48px', borderRadius: '12px' }} />,
     title: 'Flutter Arch Studio',
     subtitle: 'Generate Flutter project boilerplate yang siap production',
     content: (
@@ -99,9 +99,9 @@ const STEPS = [
           <p style={{ color: '#00d4ff', fontWeight: 'bold' }}>📍 Opsi 1: Project Baru (Rekomendasi)</p>
           <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.6', paddingLeft: '20px', fontFamily: 'var(--font-mono)' }}>
             <li>Extract file <code>.zip</code> yang didownload ke folder kosong.</li>
-            <li>Buka folder tersebut di VS Code / Android Studio.</li>
-            <li>Jalankan file <code>setup.sh</code> atau <code>setup.bat</code> (Windows).</li>
-            <li>Atau jalankan manual: <code>flutter pub get</code>.</li>
+            <li>Buka folder tersebut di terminal (VS Code / Android Studio).</li>
+            <li>Jalankan script <code>sh setup.sh</code> atau klik <code>setup.bat</code> (di Windows).</li>
+            <li><i>(Script ini akan menjalankan <code>flutter create .</code> untuk generate OS folder (iOS/Android/Web) & <code>flutter pub get</code>)</i></li>
             <li>Project siap di-run (<code>flutter run</code>).</li>
           </ul>
         </div>

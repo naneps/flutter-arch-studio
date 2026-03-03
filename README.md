@@ -19,6 +19,8 @@
 
 **Flutter Arch Studio** adalah alat berbasis web yang didesain khusus untuk mempermudah developer Flutter dalam menyiapkan fondasi (boilerplate) proyek baru. Tidak perlu lagi mengatur struktur folder, state management, dan *core files* secara manual. Cukup pilih spesifikasi yang kamu inginkan, dan unduh kodenya secara instan!
 
+👉 **[Baca Panduan Penggunaan Lengkap (Introduction Guide) di Sini!](docs/GUIDE.md)**
+
 ## ✨ Fitur Unggulan
 
 - 🏗️ **Fleksibilitas Arsitektur**: Mendukung berbagai arsitektur standar industri (mis. Clean Architecture, Feature-Driven).

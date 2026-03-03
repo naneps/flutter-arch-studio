@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ARCHITECTURES, STATE_MANAGERS } from '../data/constants.js'
-import { getCompatibilityNote, PROJECT_TYPES } from '../data/recommendations.js'
+import { getCompatibilityNote } from '../data/recommendations.js'
 import styles from './DocsPanel.module.css'
 
 function ArchDoc({ arch }) {
@@ -94,7 +94,7 @@ function CompatibilityMatrix({ currentArch, currentState }) {
 }
 
 export default function DocsPanel({ arch, state }) {
-  const [section, setSection] = useState('arch')
+  const [section, setSection] = useState('intro')
 
   const currentArch = ARCHITECTURES.find(a => a.id === arch)
   const currentState = STATE_MANAGERS.find(s => s.id === state)
@@ -103,6 +103,7 @@ export default function DocsPanel({ arch, state }) {
     <div className={styles.panel}>
       <div className={styles.nav}>
         {[
+          { id: 'intro', label: '📖 Introduction' },
           { id: 'arch', label: '🏛️ Architecture' },
           { id: 'state', label: '⚙️ State Mgmt' },
           { id: 'compat', label: '🔗 Compatibility' },
@@ -119,6 +120,39 @@ export default function DocsPanel({ arch, state }) {
       </div>
 
       <div className={styles.content}>
+        {section === 'intro' && (
+          <div>
+            <div className={styles.sectionTitle}>Introduction & Usage Guide</div>
+            <div style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.7' }}>
+              <p>Welcome to <b>Flutter Arch Studio</b>! This web tool is designed to accelerate your Flutter development by generating clean, production-ready boilerplate code instantly.</p>
+
+              <h3 style={{ color: '#e2e8f0', marginTop: '24px', marginBottom: '12px', fontSize: '16px' }}>🚀 How to Use</h3>
+              <ol style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <li><b>Configure Project:</b> Use the left panel to set your project name and organization ID.</li>
+                <li><b>Select Architecture:</b> Choose a design pattern that fits your team size and scaling needs (e.g. Clean Architecture, MVVM).</li>
+                <li><b>Pick State Management:</b> Select your preferred reactive framework (BLoC, Riverpod, GetX, etc).</li>
+                <li><b>Toggle Features:</b> Enable pre-configured modules like Authentication, Networking, or Local Storage.</li>
+                <li><b>Preview & Download:</b> Explore the generated file tree on the right. Once satisfied, click the Download button to get your <code>.zip</code> file.</li>
+              </ol>
+
+              <h3 style={{ color: '#e2e8f0', marginTop: '24px', marginBottom: '12px', fontSize: '16px' }}>💻 Post-Download Setup</h3>
+              <div style={{ background: '#111118', padding: '16px', borderRadius: '8px', border: '1px solid #2a2a38' }}>
+                <code style={{ color: '#10b981', fontFamily: 'var(--font-mono)', whiteSpace: 'pre-wrap' }}>
+                  1. Extract the downloaded .zip file into an empty folder<br />
+                  2. Open the folder in your terminal<br />
+                  3. Run <b>sh setup.sh</b> or <b>setup.bat</b> (Windows)<br />
+                  &nbsp;&nbsp;&nbsp;<i>(This generates platform folders like iOS/Android & runs pub get)</i><br />
+                  4. Run <b>flutter run</b>
+                </code>
+              </div>
+
+              <p style={{ marginTop: '20px' }}>
+                Navigate to the other tabs in this documentation panel to learn more about the specific architectures and state management options you can choose from.
+              </p>
+            </div>
+          </div>
+        )}
+
         {section === 'arch' && currentArch && (
           <div>
             <div className={styles.sectionTitle}>Architecture Documentation</div>
@@ -331,12 +365,12 @@ class LoginView extends GetView<AuthController> {
                 ))}
               </div>
               {[
-                { label: 'Complexity',    vals: ['High', 'Medium', 'Medium', 'Low'] },
-                { label: 'Testability',   vals: ['⭐⭐⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐'] },
-                { label: 'Boilerplate',   vals: ['High', 'Medium', 'Medium', 'Low'] },
-                { label: 'Team Size',     vals: ['Any', 'Small-Med', 'Any', 'Solo-Small'] },
-                { label: 'Best For',      vals: ['Enterprise', 'SaaS/Apps', 'Large teams', 'Rapid MVP'] },
-                { label: 'Learning Curve',vals: ['Steep', 'Moderate', 'Moderate', 'Easy'] },
+                { label: 'Complexity', vals: ['High', 'Medium', 'Medium', 'Low'] },
+                { label: 'Testability', vals: ['⭐⭐⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐'] },
+                { label: 'Boilerplate', vals: ['High', 'Medium', 'Medium', 'Low'] },
+                { label: 'Team Size', vals: ['Any', 'Small-Med', 'Any', 'Solo-Small'] },
+                { label: 'Best For', vals: ['Enterprise', 'SaaS/Apps', 'Large teams', 'Rapid MVP'] },
+                { label: 'Learning Curve', vals: ['Steep', 'Moderate', 'Moderate', 'Easy'] },
               ].map(row => (
                 <div key={row.label} className={styles.compareRow}>
                   <div className={styles.compareRowLabel}>{row.label}</div>

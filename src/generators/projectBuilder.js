@@ -1,31 +1,31 @@
 import {
-  genAuthBloc,
-  genAuthGetX,
-  genAuthProvider,
-  genAuthRemoteDataSource,
-  genAuthRepository,
-  genAuthRepositoryImpl,
-  genAuthRiverpod,
-  genLoginPage,
-  genLoginUseCase,
-  genUserEntity,
-  genUserModel,
+    genAuthBloc,
+    genAuthGetX,
+    genAuthProvider,
+    genAuthRemoteDataSource,
+    genAuthRepository,
+    genAuthRepositoryImpl,
+    genAuthRiverpod,
+    genLoginPage,
+    genLoginUseCase,
+    genUserEntity,
+    genUserModel,
 } from './authFeature.js'
 import {
-  genAnalysisOptions,
-  genAppDart,
-  genAuthInterceptor,
-  genDioClient,
-  genDotEnv,
-  genEnv,
-  genExceptions,
-  genFailures,
-  genGitignore,
-  genMainDart,
-  genReadme,
-  genRouter,
-  genTheme,
-  genUseCase,
+    genAnalysisOptions,
+    genAppDart,
+    genAuthInterceptor,
+    genDioClient,
+    genDotEnv,
+    genEnv,
+    genExceptions,
+    genFailures,
+    genGitignore,
+    genMainDart,
+    genReadme,
+    genRouter,
+    genTheme,
+    genUseCase,
 } from './coreFiles.js'
 import { generatePubspec } from './pubspec.js'
 
@@ -642,21 +642,25 @@ function buildCleanFiles(state, feats) {
   return files
 }
 
-function genSetupScript(projectName, type) {
+function genSetupScript(projectName, orgName, type) {
+  const snakeCaseName = projectName.replace(/-/g, '_').toLowerCase();
+  
   if (type === 'sh') {
     return `#!/bin/bash
 echo "Setting up ${projectName}..."
+flutter create . --org "${orgName}" --project-name "${snakeCaseName}"
 flutter pub get
 # flutter run build_runner if there is code generation
 echo "Setup complete. You can now run 'flutter run'."
-`
+`;
   } else {
     return `@echo off
 echo Setting up ${projectName}...
+flutter create . --org "${orgName}" --project-name "${snakeCaseName}"
 flutter pub get
 echo Setup complete. You can now run 'flutter run'.
 pause
-`
+`;
   }
 }
 
@@ -703,8 +707,8 @@ export function buildProject(projectName, orgName, arch, state, feats) {
     'pubspec.yaml': generatePubspec(projectName, state, feats),
     'analysis_options.yaml': genAnalysisOptions(feats),
     'README.md': genReadme(projectName, arch, state, feats),
-    'setup.sh': genSetupScript(projectName, 'sh'),
-    'setup.bat': genSetupScript(projectName, 'bat'),
+    'setup.sh': genSetupScript(projectName, orgName, 'sh'),
+    'setup.bat': genSetupScript(projectName, orgName, 'bat'),
   }
 
   if (feats.includes('env')) {

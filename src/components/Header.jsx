@@ -4,7 +4,7 @@ export default function Header({ arch, state, fileCount, onHelp, theme, toggleTh
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
-        <div className={styles.logoIcon}>🏗️</div>
+        <img src="/favicon.png" alt="Flutter Arch Studio" className={styles.logoIcon} style={{ width: '28px', height: '28px', borderRadius: '6px' }} />
         <span>Flutter <span className={styles.accent}>Arch</span> Studio</span>
       </div>
       <div className={styles.meta}>
