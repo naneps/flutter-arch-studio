@@ -1,5 +1,6 @@
 <div align="center">
-  <h1>🏗️ Flutter Arch Studio</h1>
+  <img src="public/favicon.png" alt="Flutter Arch Studio Logo" width="150" style="border-radius: 24px; margin-bottom: 20px;" />
+  <h1>Flutter Arch Studio</h1>
   <p><b>Web tool revolusioner untuk men-generate boilerplate proyek Flutter!</b></p>
   <p><i>Pilih arsitektur, state management, dan fitur favoritmu, lalu unduh dalam format <code>.zip</code> yang siap pakai.</i></p>
   
