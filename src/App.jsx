@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import styles from './App.module.css'
 import AnimatedBackground from './components/AnimatedBackground.jsx'
 import ConfigPanel from './components/ConfigPanel.jsx'
+import CustomCursor from './components/CustomCursor.jsx'
 import Header from './components/Header.jsx'
 import OutputPanel from './components/OutputPanel.jsx'
 import WelcomeModal from './components/WelcomeModal.jsx'
@@ -53,6 +54,7 @@ export default function App() {
 
   return (
     <div className={styles.app}>
+      <CustomCursor />
       <AnimatedBackground />
 
       {showWelcome && (

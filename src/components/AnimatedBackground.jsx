@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import styles from './AnimatedBackground.module.css'
 
 const ORBS = [
@@ -9,6 +10,16 @@ const ORBS = [
 ]
 
 export default function AnimatedBackground() {
+    const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 })
+
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            setMousePos({ x: e.clientX, y: e.clientY })
+        }
+        window.addEventListener('mousemove', handleMouseMove)
+        return () => window.removeEventListener('mousemove', handleMouseMove)
+    }, [])
+
     return (
         <div className={styles.root} aria-hidden="true">
             {ORBS.map((orb, i) => (
@@ -26,6 +37,13 @@ export default function AnimatedBackground() {
                     }}
                 />
             ))}
+            <div
+                className={styles.spotlight}
+                style={{
+                    '--mouse-x': `${mousePos.x}px`,
+                    '--mouse-y': `${mousePos.y}px`
+                }}
+            />
             <div className={styles.grid} />
         </div>
     )

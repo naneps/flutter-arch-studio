@@ -1,0 +1,59 @@
+.cursorDot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+.cursorOutline {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+    /* Add smooth following effect */
+    transition-property: left, top, width, height, background-color, border-color;
+    transition-duration: 0.1s, 0.1s, 0.2s, 0.2s, 0.2s, 0.2s;
+    transition-timing-function: ease-out;
+}
+
+[data-theme='light'] .cursorOutline {
+    border-color: rgba(2, 132, 199, 0.3);
+}
+
+.cursorDot.pointer {
+    background-color: transparent;
+}
+
+.cursorOutline.pointer {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(0, 212, 255, 0.05);
+    border-color: var(--accent);
+}
+
+[data-theme='light'] .cursorOutline.pointer {
+    background-color: rgba(2, 132, 199, 0.05);
+}
+
+/* Hide default cursor globally */
+:global(body) {
+    cursor: none !important;
+}
+
+:global(a),
+:global(button),
+:global([role="button"]),
+:global(input),
+:global(textarea) {
+    cursor: none !important;
+}

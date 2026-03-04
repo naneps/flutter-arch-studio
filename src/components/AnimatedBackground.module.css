@@ -27,13 +27,16 @@
     transform: translate(-50%, -50%) scale(1) rotate(0deg);
     opacity: 0.10;
   }
+
   33% {
     opacity: 0.18;
   }
+
   66% {
     transform: translate(calc(-50% + 60px), calc(-50% - 40px)) scale(1.15) rotate(8deg);
     opacity: 0.14;
   }
+
   100% {
     transform: translate(calc(-50% + 30px), calc(-50% + 50px)) scale(0.92) rotate(-5deg);
     opacity: 0.11;
@@ -57,6 +60,24 @@
 }
 
 @keyframes gridPulse {
-  0%   { opacity: 0.6; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(800px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px), rgba(255, 255, 255, 0.05), transparent 40%);
+  will-change: background;
+}
+
+[data-theme='light'] .spotlight {
+  background: radial-gradient(800px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px), rgba(2, 132, 199, 0.03), transparent 40%);
 }
