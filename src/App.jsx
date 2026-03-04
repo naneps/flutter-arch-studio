@@ -3,6 +3,7 @@ import styles from './App.module.css'
 import AnimatedBackground from './components/AnimatedBackground.jsx'
 import ConfigPanel from './components/ConfigPanel.jsx'
 import CustomCursor from './components/CustomCursor.jsx'
+import GitHubModal from './components/GitHubModal.jsx'
 import Header from './components/Header.jsx'
 import OutputPanel from './components/OutputPanel.jsx'
 import WelcomeModal from './components/WelcomeModal.jsx'
@@ -20,6 +21,7 @@ export default function App() {
   } = useProjectConfig()
   const { download, downloading } = useDownload()
   const [showWelcome, setShowWelcome] = useState(true)
+  const [showGitHub, setShowGitHub] = useState(false)
   const [theme, setTheme] = useState('dark')
 
   // Deep link: read URL params on first mount and apply config
@@ -61,6 +63,17 @@ export default function App() {
         <WelcomeModal onClose={() => setShowWelcome(false)} />
       )}
 
+      {showGitHub && (() => {
+        console.log('Rendering GitHubModal!')
+        return (
+          <GitHubModal
+            onClose={() => setShowGitHub(false)}
+            files={files}
+            defaultRepoName={projectName}
+          />
+        )
+      })()}
+
       <Header
         arch={arch}
         state={state}
@@ -79,6 +92,10 @@ export default function App() {
           state={state} setState={setState}
           feats={feats} toggleFeat={toggleFeat}
           onDownload={() => download(files)}
+          onPushGithub={() => {
+            console.log('GitHub Push Button Clicked!')
+            setShowGitHub(true)
+          }}
           downloading={downloading}
           onHelp={() => setShowWelcome(true)}
         />

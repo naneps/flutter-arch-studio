@@ -37,7 +37,7 @@ export default function ConfigPanel({
   arch, setArch,
   state, setState,
   feats, toggleFeat,
-  onDownload, downloading, onHelp
+  onDownload, downloading, onHelp, onPushGithub
 }) {
   const [showReco, setShowReco] = useState(false)
 
@@ -162,6 +162,14 @@ export default function ConfigPanel({
       <div className={styles.footer}>
         <button className={styles.helpBtn} onClick={onHelp} title="Show guide">
           ? Guide
+        </button>
+        <button
+          className={styles.githubBtn}
+          onClick={onPushGithub}
+          disabled={downloading}
+          title="Push directly to GitHub"
+        >
+          🐙 Push to GitHub
         </button>
         <button
           className={styles.downloadBtn}

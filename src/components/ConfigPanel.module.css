@@ -174,9 +174,48 @@
   animation: bouncePill 0.35s ease;
 }
 
+/* GitHub Push button */
+.githubBtn {
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(0, 212, 255, 0.15));
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  border-radius: 9px;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s;
+  flex-shrink: 0;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.githubBtn:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.28), rgba(0, 212, 255, 0.28));
+  border-color: rgba(167, 139, 250, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(167, 139, 250, 0.25);
+}
+
+.githubBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.githubBtn:disabled {
+  background: var(--surface2);
+  color: var(--muted);
+  border-color: var(--border);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 /* Download button */
 .downloadBtn {
-  margin: 14px;
   padding: 12px;
   background: linear-gradient(135deg, var(--accent), #0099cc);
   border: none;
@@ -190,6 +229,11 @@
   letter-spacing: 0.3px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 8px;
 }
 
 .downloadBtn::after {
@@ -403,23 +447,27 @@
 /* Footer */
 .footer {
   display: flex;
-  gap: 8px;
-  padding: 12px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  padding: 16px 14px;
   border-top: 1px solid var(--border);
   flex-shrink: 0;
 }
 
 .helpBtn {
-  padding: 10px 12px;
-  background: none;
+  padding: 10px;
+  background: var(--surface2);
   border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--muted);
   font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.15s;
   font-family: var(--font-mono);
-  flex-shrink: 0;
+  width: 100%;
+  text-align: center;
 }
 
 .helpBtn:hover {

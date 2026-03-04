@@ -1,15 +1,16 @@
-import { useState, useMemo } from 'react'
-import FileTree from './FileTree.jsx'
-import CodePreview from './CodePreview.jsx'
+import { useMemo, useState } from 'react'
 import Checklist from './Checklist.jsx'
+import CodePreview from './CodePreview.jsx'
 import DocsPanel from './DocsPanel.jsx'
+import FileTree from './FileTree.jsx'
 import styles from './OutputPanel.module.css'
 
 const TABS = [
   { id: 'explorer', label: '📁 Explorer' },
-  { id: 'docs',     label: '📚 Docs' },
-  { id: 'pubspec',  label: '📦 pubspec.yaml' },
-  { id: 'checklist',label: '✅ Checklist' },
+  { id: 'docs', label: '📚 Docs' },
+  { id: 'pubspec', label: '📦 pubspec.yaml' },
+  { id: 'checklist', label: '✅ Checklist' },
+  { id: 'playground', label: '🎾 Playground' },
 ]
 
 export default function OutputPanel({ files, arch, state, feats }) {
@@ -115,6 +116,17 @@ export default function OutputPanel({ files, arch, state, feats }) {
 
       {activeTab === 'checklist' && (
         <Checklist arch={arch} state={state} feats={feats} />
+      )}
+
+      {activeTab === 'playground' && (
+        <div className={styles.playgroundWrap}>
+          <iframe
+            src="https://dartpad.dev/embed-flutter.html?theme=dark&run=true"
+            title="DartPad Playground"
+            className={styles.playgroundIframe}
+            sandbox="allow-scripts allow-same-origin allow-popups allow-downloads"
+          />
+        </div>
       )}
     </div>
   )
