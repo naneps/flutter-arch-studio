@@ -5,16 +5,16 @@ const STEPS = [
   {
     icon: <img src="/favicon.png" alt="Logo" style={{ width: '48px', height: '48px', borderRadius: '12px' }} />,
     title: 'Flutter Arch Studio',
-    subtitle: 'Generate Flutter project boilerplate yang siap production',
+    subtitle: 'Bikin boilerplate project Flutter yang udah siap production! 🚀',
     content: (
       <div>
-        <p>Tool ini membantu kamu generate Flutter project dengan struktur yang proper — tinggal pilih arsitektur, state management, dan fitur yang dibutuhkan.</p>
+        <p>Aplikasi ini bakal bantuin kamu generate project Flutter dengan struktur yang mantap — tinggal pilih arsitektur, state management, sama fitur yang kamu butuhin.</p>
         <div className="feature-grid">
           {[
-            { icon: '📁', text: 'Folder structure sesuai arch yang dipilih' },
-            { icon: '🎯', text: 'File Dart dengan kode yang bisa langsung dipakai' },
-            { icon: '⬇️', text: 'Download .zip — langsung flutter pub get' },
-            { icon: '📚', text: 'Dokumentasi tiap arsitektur & state management' },
+            { icon: '📁', text: 'Struktur folder ngikutin arsitektur yang kamu pilih' },
+            { icon: '🎯', text: 'File Dart-nya udah ada kode dasar, tinggal lanjutin ngoding aja' },
+            { icon: '⬇️', text: 'Tinggal download .zip — langsung aja flutter pub get' },
+            { icon: '📚', text: 'Dokumentasi lengkap buat tiap arsitektur & state management' },
           ].map((f, i) => (
             <div key={i} className="feature-item">
               <span>{f.icon}</span> {f.text}
@@ -27,19 +27,19 @@ const STEPS = [
   {
     icon: '🏛️',
     title: 'Pilih Architecture',
-    subtitle: 'Tiap arsitektur punya trade-off yang berbeda',
+    subtitle: 'Tiap arsitektur punya gaya masing-masing, pilih yang pas buat project-mu',
     content: (
       <div>
         {[
-          { name: 'Clean Architecture', icon: '🏛️', when: 'Tim besar, enterprise, butuh testability tinggi', avoid: 'Solo project atau MVP yang harus ship cepat' },
-          { name: 'MVVM', icon: '⚙️', when: 'Tim kecil-medium, SaaS, butuh balance simplicity & structure', avoid: 'Kalau ViewModel mulai fat, pertimbangkan Clean Arch' },
-          { name: 'Feature-First', icon: '📦', when: 'Tim yang split per feature, app yang terus berkembang', avoid: 'Project kecil dengan 1-2 developer' },
-          { name: 'MVC + GetX', icon: '🎯', when: 'MVP cepat, solo developer, prototype', avoid: 'App yang butuh testing intensif' },
+          { name: 'Clean Architecture', icon: '🏛️', when: 'Buat tim besar, enterprise, atau kalo butuh testability yang super tinggi', avoid: 'Project solo atau MVP yang pengen buru-buru rilis' },
+          { name: 'MVVM', icon: '⚙️', when: 'Tim kecil-medium, aplikasi SaaS, yang butuh balance antara simplicity & struktur rapi', avoid: 'Kalo ViewModel udah kerasa kepanjangan (fat), mending beralih ke Clean Arch' },
+          { name: 'Feature-First', icon: '📦', when: 'Kalo tim ngerjain per fitur, dan aplikasinya bakal terus berkembang gede', avoid: 'Project kecil-kecilan yang cuma digarap 1-2 orang' },
+          { name: 'MVC + GetX', icon: '🎯', when: 'Bikin MVP cepet, solo dev yang males ribet, atau sekedar nyobain prototype', avoid: 'Aplikasi gede yang butuh testing ketat dan maintain jangka panjang' },
         ].map(a => (
           <div key={a.name} className="arch-item">
             <div className="arch-name">{a.icon} {a.name}</div>
-            <div className="arch-when">✅ Pakai kalau: {a.when}</div>
-            <div className="arch-avoid">⚠️ Hindari kalau: {a.avoid}</div>
+            <div className="arch-when">✅ Cocok buat: {a.when}</div>
+            <div className="arch-avoid">⚠️ Mending jangan buat: {a.avoid}</div>
           </div>
         ))}
       </div>
@@ -48,18 +48,18 @@ const STEPS = [
   {
     icon: '⚡',
     title: 'Pilih State Management',
-    subtitle: 'Setiap pilihan punya karakteristik yang berbeda',
+    subtitle: 'Pilih senjatamu! Tiap state management punya rasanya sendiri',
     content: (
       <div>
         {[
-          { name: 'BLoC / Cubit', icon: '🧱', best: 'Clean Architecture, enterprise, butuh strict separation' },
-          { name: 'Riverpod', icon: '🌊', best: 'Modern apps, compile-safe, flexible — recommended untuk most cases' },
-          { name: 'Provider', icon: '🔌', best: 'Belajar Flutter, simple apps, atau tim yang sudah familiar' },
-          { name: 'GetX', icon: '⚡', best: 'MVC pattern, rapid development, all-in-one solution' },
+          { name: 'BLoC / Cubit', icon: '🧱', best: 'Clean Architecture, enterprise, yang butuh pemisahan logic bener-bener strict' },
+          { name: 'Riverpod', icon: '🌊', best: 'Aplikasi modern, compile-safe, fleksibel — paling direkomendasiin buat banyak kasus!' },
+          { name: 'Provider', icon: '🔌', best: 'Lagi belajar Flutter, aplikasi simple, atau kalo tim udah kebiasa pakenya' },
+          { name: 'GetX', icon: '⚡', best: 'Gaya MVC, develop cepet banget, solusi all-in-one yang sat-set' },
         ].map(s => (
           <div key={s.name} className="state-item">
             <div className="state-name">{s.icon} {s.name}</div>
-            <div className="state-best">Best for: {s.best}</div>
+            <div className="state-best">Paling pas buat: {s.best}</div>
           </div>
         ))}
       </div>
@@ -68,15 +68,15 @@ const STEPS = [
   {
     icon: '📦',
     title: 'Cara Pakai Tool',
-    subtitle: 'Step-by-step dari generate sampai coding',
+    subtitle: 'Step-by-step dari generate sampe siap ngoding',
     content: (
       <div>
         {[
-          { step: '01', title: 'Pilih Architecture + State Management', desc: 'Klik card di left panel. Output otomatis update real-time.' },
-          { step: '02', title: 'Toggle Features yang dibutuhkan', desc: 'Auth, API, Router, Theme, dll — setiap fitur menambahkan file dan dependency.' },
-          { step: '03', title: 'Preview di Explorer tab', desc: 'Klik file di folder tree untuk lihat kodenya. Ada syntax highlighting dan file description.' },
-          { step: '04', title: 'Download .zip', desc: 'Klik tombol Download. Extract, flutter pub get, langsung coding.' },
-          { step: '05', title: 'Baca Dokumentasi', desc: 'Tab Docs punya architecture docs, state management guide, dan compatibility matrix.' },
+          { step: '01', title: 'Pilih Architecture + State Management', desc: 'Tinggal klik card di panel kiri, output di kanan bakal langsung update otomatis lho.' },
+          { step: '02', title: 'Toggle Fitur yang kamu butuhin', desc: 'Butuh Auth, API, Router, Theme, dll? Centang aja, file sama dependency-nya bakal otomatis ditambahin.' },
+          { step: '03', title: 'Intip kodenya di Explorer', desc: 'Klik aja file di folder tree buat ngintip daleman kodenya. Udah ada syntax highlighting-nya juga!' },
+          { step: '04', title: 'Download .zip', desc: 'Kalo udah sreg, klik Download. Tinggal extract, jalankan flutter pub get, langsung coding deh.' },
+          { step: '05', title: 'Baca Dokumentasi', desc: 'Jangan lupa mampir ke tab Docs ya, ada panduan arsitektur sama compatibility matrix-nya lho.' },
         ].map(s => (
           <div key={s.step} className="how-item">
             <div className="how-step">{s.step}</div>
@@ -92,27 +92,27 @@ const STEPS = [
   {
     icon: '🚀',
     title: 'Cara Integrasi / Penggunaan',
-    subtitle: 'Apa yang harus dilakukan setelah download?',
+    subtitle: 'Ngapain aja sih abis selesai download?',
     content: (
       <div>
         <div style={{ marginBottom: '16px' }}>
-          <p style={{ color: '#00d4ff', fontWeight: 'bold' }}>📍 Opsi 1: Project Baru (Rekomendasi)</p>
+          <p style={{ color: '#00d4ff', fontWeight: 'bold' }}>📍 Opsi 1: Mulai Project Baru (Paling Disaranin)</p>
           <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.6', paddingLeft: '20px', fontFamily: 'var(--font-mono)' }}>
-            <li>Extract file <code>.zip</code> yang didownload ke folder kosong.</li>
-            <li>Buka folder tersebut di terminal (VS Code / Android Studio).</li>
-            <li>Jalankan script <code>sh setup.sh</code> atau klik <code>setup.bat</code> (di Windows).</li>
-            <li><i>(Script ini akan menjalankan <code>flutter create .</code> untuk generate OS folder (iOS/Android/Web) & <code>flutter pub get</code>)</i></li>
-            <li>Project siap di-run (<code>flutter run</code>).</li>
+            <li>Extract file <code>.zip</code> yang barusan kamu download ke folder kosong.</li>
+            <li>Buka folder itu di terminal atau IDE (VS Code / Android Studio) kesayanganmu.</li>
+            <li>Jalanin aja script <code>sh setup.sh</code> atau double-click <code>setup.bat</code> (kalo kamu di Windows).</li>
+            <li><i>(Script ini bakal ngejalanin <code>flutter create .</code> buat bikin folder OS kayak iOS/Android/Web, plus <code>flutter pub get</code>)</i></li>
+            <li>Boom! Project udah siap di-run (<code>flutter run</code>). 🚀</li>
           </ul>
         </div>
         <div>
-          <p style={{ color: '#f59e0b', fontWeight: 'bold' }}>📍 Opsi 2: Replace ke Project Existing</p>
+          <p style={{ color: '#f59e0b', fontWeight: 'bold' }}>📍 Opsi 2: Timpa ke Project yang Udah Ada</p>
           <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.6', paddingLeft: '20px', fontFamily: 'var(--font-mono)' }}>
-            <li><i>Hati-hati! Sebaiknya backup project lama Anda.</i></li>
-            <li>Extract zip, lalu copy folder <code>lib/</code>, <code>pubspec.yaml</code>, dan <code>analysis_options.yaml</code>.</li>
-            <li>Paste dan replace file tersebut di project existing Anda.</li>
-            <li>Jalankan <code>flutter pub get</code>.</li>
-            <li>Sesuaikan nama package di import jika ada error (misal: <code>import 'package:nama_project_lama/...'</code>).</li>
+            <li><i>Awas hati-hati! Mendingan kamu backup dulu project lama kamu ya.</i></li>
+            <li>Extract zip-nya, terus copy folder <code>lib/</code>, <code>pubspec.yaml</code>, dan <code>analysis_options.yaml</code>.</li>
+            <li>Paste dan timpa file-file itu di project kamu.</li>
+            <li>Jalanin <code>flutter pub get</code> biar package-nya kedownload.</li>
+            <li>Kalo ada error import, tinggal sesuaian aja nama package-nya (misalnya ganti ke <code>import 'package:nama_project_lama/...'</code>).</li>
           </ul>
         </div>
       </div>
@@ -183,7 +183,7 @@ export default function WelcomeModal({ onClose }) {
               </button>
             ) : (
               <button className={styles.startBtn} onClick={onClose}>
-                🚀 Start Building
+                🚀 Mulai Bangun App-mu!
               </button>
             )}
           </div>

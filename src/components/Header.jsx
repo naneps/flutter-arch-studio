@@ -28,6 +28,15 @@ export default function Header({ arch, state, fileCount, onHelp, theme, toggleTh
         <button className={styles.themeBtn} onClick={toggleTheme}>
           {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
         </button>
+        <a
+          href="https://saweria.co/nannndev"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.supportBtn}
+          title="Bantu support project ini ya!"
+        >
+          ☕ Support
+        </a>
         <button className={styles.helpBtn} onClick={onHelp}>? Guide</button>
         <span className={styles.badge}>v2.0</span>
       </div>
