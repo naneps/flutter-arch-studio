@@ -85,16 +85,23 @@ export const STATE_MANAGERS = [
 ]
 
 export const FEATURES = [
-  { id: 'auth',     label: '🔐 Auth',         desc: 'Login, register, token management' },
-  { id: 'api',      label: '🌐 API / Dio',     desc: 'HTTP client with interceptors' },
-  { id: 'storage',  label: '💾 Hive Storage',  desc: 'Local persistent storage' },
-  { id: 'router',   label: '🗺️ GoRouter',      desc: 'Declarative navigation' },
-  { id: 'theme',    label: '🎨 Theming',       desc: 'Light/dark theme system' },
-  { id: 'l10n',     label: '🌍 Localization',  desc: 'Multi-language support' },
-  { id: 'push',     label: '🔔 Push Notif',    desc: 'Firebase push notifications' },
-  { id: 'firebase', label: '🔥 Firebase',      desc: 'Firestore + Firebase Auth' },
-  { id: 'env',      label: '🔑 Env Config',    desc: 'Environment variables (.env)' },
-  { id: 'codegen',  label: '⚙️ Code Gen',      desc: 'Freezed & JSON Serializable' },
-  { id: 'cicd',     label: '🚀 CI/CD',         desc: 'GitHub Actions workflow' },
-  { id: 'lints',    label: '✨ Strict Lints',   desc: 'flutter_lints or very_good_analysis' },
+  // Core
+  { id: 'theme',    label: '🎨 Theming',       desc: 'Light/dark theme system', category: 'Core' },
+  { id: 'router',   label: '🗺️ GoRouter',      desc: 'Declarative navigation', category: 'Core' },
+  { id: 'lints',    label: '✨ Strict Lints',   desc: 'flutter_lints or very_good_analysis', category: 'Core' },
+  
+  // Networking & State
+  { id: 'api',      label: '🌐 API / Dio',     desc: 'HTTP client with interceptors', category: 'Connectivity' },
+  { id: 'auth',     label: '🔐 Auth',         desc: 'Login, register, token management', category: 'Connectivity' },
+  { id: 'firebase', label: '🔥 Firebase',      desc: 'Firestore + Firebase Auth', category: 'Connectivity' },
+  { id: 'push',     label: '🔔 Push Notif',    desc: 'Firebase push notifications', category: 'Connectivity' },
+
+  // Data & Logic
+  { id: 'storage',  label: '💾 Hive Storage',  desc: 'Local persistent storage', category: 'Data' },
+  { id: 'l10n',     label: '🌍 Localization',  desc: 'Multi-language support', category: 'Data' },
+  { id: 'env',      label: '🔑 Env Config',    desc: 'Environment variables (.env)', category: 'Data' },
+  
+  // Dev & Ops
+  { id: 'codegen',  label: '⚙️ Code Gen',      desc: 'Freezed & JSON Serializable', category: 'DevTools' },
+  { id: 'cicd',     label: '🚀 CI/CD',         desc: 'GitHub Actions workflow', category: 'DevTools' },
 ]

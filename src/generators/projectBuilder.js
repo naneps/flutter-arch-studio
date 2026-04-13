@@ -612,10 +612,10 @@ function buildCleanFiles(state, feats) {
   }
 
   if (hasAuth) {
-    files['lib/features/auth/domain/entities/user.dart'] = genUserEntity()
+    files['lib/features/auth/domain/entities/user.dart'] = genUserEntity(feats)
     files['lib/features/auth/domain/repositories/auth_repository.dart'] = genAuthRepository()
     files['lib/features/auth/domain/usecases/login_usecase.dart'] = genLoginUseCase()
-    files['lib/features/auth/data/models/user_model.dart'] = genUserModel()
+    files['lib/features/auth/data/models/user_model.dart'] = genUserModel(feats)
     files['lib/features/auth/data/datasources/auth_remote_datasource.dart'] = genAuthRemoteDataSource(hasApi)
     files['lib/features/auth/data/repositories/auth_repository_impl.dart'] = genAuthRepositoryImpl(hasApi)
     files['lib/features/auth/presentation/pages/login_page.dart'] = genLoginPage(state)
@@ -725,10 +725,9 @@ export function buildProject(projectName, orgName, arch, state, feats) {
   // Architecture-specific files
   let archFiles = {}
   if (arch === 'clean')   archFiles = buildCleanFiles(state, feats)
-  if (arch === 'mvvm')    archFiles = buildMvcFiles(feats) // reuse some, mvvm specific below
-  if (arch === 'mvvm')    archFiles = { ...archFiles, ...buildMvvmFiles(state, feats) }
-  if (arch === 'feature') archFiles = buildFeatureFiles(state, feats)
   if (arch === 'mvc')     archFiles = buildMvcFiles(feats)
+  if (arch === 'mvvm')    archFiles = buildMvvmFiles(state, feats)
+  if (arch === 'feature') archFiles = buildFeatureFiles(state, feats)
 
   return { ...files, ...archFiles }
 }

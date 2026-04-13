@@ -1,36 +1,52 @@
 import { useState } from 'react'
-import styles from './FileTree.module.css'
+import { 
+  Folder, 
+  File, 
+  ChevronRight, 
+  ChevronDown,
+  Settings,
+  FileText,
+  FileCode
+} from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 function getIcon(name, isDir) {
-  if (isDir) return { icon: '📁', color: '#f59e0b' }
-  if (name.endsWith('.dart')) return { icon: '🎯', color: '#54c5f8' }
-  if (name.endsWith('.yaml') || name.endsWith('.yml')) return { icon: '📄', color: '#10b981' }
-  if (name.endsWith('.md')) return { icon: '📝', color: '#a78bfa' }
-  if (name.startsWith('.')) return { icon: '⚙️', color: '#64748b' }
-  return { icon: '📄', color: '#94a3b8' }
+  if (isDir) return { icon: Folder, color: "text-amber-500" }
+  if (name.endsWith('.dart')) return { icon: FileCode, color: "text-sky-400" }
+  if (name.endsWith('.yaml') || name.endsWith('.yml')) return { icon: FileText, color: "text-emerald-400" }
+  if (name.endsWith('.md')) return { icon: FileText, color: "text-purple-400" }
+  if (name.startsWith('.')) return { icon: Settings, color: "text-muted-foreground" }
+  return { icon: File, color: "text-muted-foreground/70" }
 }
 
 function TreeNode({ name, node, depth, fullPath, selectedFile, onSelect }) {
   const isDir = node !== null && typeof node === 'object'
   const [open, setOpen] = useState(depth < 2)
-  const { icon, color } = getIcon(name, isDir)
+  const { icon: Icon, color } = getIcon(name, isDir)
   const isSelected = selectedFile === fullPath
 
   return (
-    <div>
+    <div className="select-none">
       <div
-        className={`${styles.node} ${isSelected ? styles.nodeSelected : ''}`}
-        style={{ paddingLeft: depth * 14 + 8 }}
+        className={cn(
+          "flex items-center gap-2 py-1 pr-2 rounded-md cursor-pointer transition-colors group",
+          isSelected ? "bg-primary/10 text-primary" : "hover:bg-card/40"
+        )}
+        style={{ paddingLeft: depth * 14 + 12 }}
         onClick={() => isDir ? setOpen(o => !o) : onSelect(fullPath)}
       >
-        <span className={styles.arrow}>{isDir ? (open ? '▾' : '▸') : ' '}</span>
-        <span style={{ fontSize: 13 }}>{icon}</span>
-        <span style={{ color: isSelected ? 'var(--accent)' : color, fontSize: 12, fontFamily: 'var(--font-mono)' }}>
+        <div className="w-4 h-4 flex items-center justify-center text-muted-foreground">
+          {isDir ? (open ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />) : null}
+        </div>
+        <Icon className={cn("w-3.5 h-3.5 shrink-0", isSelected ? "text-primary" : color)} />
+        <span className={cn(
+          "font-mono text-[12px] truncate",
+          isSelected ? "text-primary font-bold" : "text-foreground/80 group-hover:text-foreground"
+        )}>
           {name}
         </span>
       </div>
       {isDir && open && Object.entries(node).sort(([,a],[,b]) => {
-        // folders first
         const aDir = a !== null && typeof a === 'object'
         const bDir = b !== null && typeof b === 'object'
         if (aDir && !bDir) return -1
@@ -42,7 +58,7 @@ function TreeNode({ name, node, depth, fullPath, selectedFile, onSelect }) {
           name={k}
           node={v}
           depth={depth + 1}
-          fullPath={`${fullPath}/${k}`}
+          fullPath={fullPath ? `${fullPath}/${k}` : k}
           selectedFile={selectedFile}
           onSelect={onSelect}
         />
@@ -68,8 +84,10 @@ export default function FileTree({ files, selectedFile, onSelect }) {
   const tree = buildTree(files)
 
   return (
-    <div className={styles.tree}>
-      <div className={styles.hint}>Click a file to preview</div>
+    <div className="py-2.5 px-2 h-full overflow-y-auto custom-scrollbar">
+      <div className="font-mono text-[9px] text-muted-foreground/60 tracking-[0.2em] px-3 pb-3 uppercase">
+        Project Explorer
+      </div>
       {Object.entries(tree).map(([k, v]) => (
         <TreeNode
           key={k}

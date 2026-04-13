@@ -4,9 +4,11 @@ import { saveAs } from 'file-saver'
 
 export function useDownload() {
   const [downloading, setDownloading] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
 
   const download = async (files, projectName = 'my_app') => {
     setDownloading(true)
+    setShowSuccess(false)
     try {
       const zip = new JSZip()
       const root = zip.folder(projectName)
@@ -15,6 +17,7 @@ export function useDownload() {
       })
       const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' })
       saveAs(blob, `${projectName}.zip`)
+      setShowSuccess(true)
     } catch (e) {
       console.error('Download failed', e)
       alert('Download failed: ' + e.message)
@@ -22,5 +25,5 @@ export function useDownload() {
     setDownloading(false)
   }
 
-  return { download, downloading }
+  return { download, downloading, showSuccess, setShowSuccess }
 }

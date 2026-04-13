@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import styles from './Checklist.module.css'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
+import { Info } from 'lucide-react'
 
-function buildChecklist(arch, state, feats) {
-  const needsBuildRunner = state === 'bloc' || state === 'riverpod'
+function buildChecklist(projectName, arch, state, feats) {
+  const needsBuildRunner = state === 'bloc' || state === 'riverpod' || feats.includes('codegen')
+  const snakeCaseName = projectName.replace(/-/g, '_').toLowerCase()
   return [
-    { text: 'flutter create my_app --org com.yourname', tag: 'terminal' },
-    { text: 'flutter pub get  (setelah copy pubspec.yaml)', tag: 'terminal' },
-    { text: `Buat folder structure: ${arch} architecture`, tag: 'structure' },
-    { text: 'Copy semua file dari File Preview ke project', tag: 'file' },
+    { text: 'Extract .zip and buka terminal di folder tersebut', tag: 'file' },
+    { text: `flutter create . --org com.example --project-name ${snakeCaseName}`, tag: 'terminal' },
+    { text: 'flutter pub get (untuk sinkronisasi dependencies)', tag: 'terminal' },
     ...(feats.includes('env') ? [
       { text: 'cp .env.example .env  →  isi dengan value asli', tag: 'security' },
       { text: 'Tambahkan .env ke .gitignore (sudah ada di template)', tag: 'security' },
@@ -30,61 +33,97 @@ function buildChecklist(arch, state, feats) {
   ]
 }
 
-const TAG_COLORS = {
-  terminal: '#00d4ff',
-  structure: '#f59e0b',
-  file: '#a78bfa',
-  security: '#ef4444',
-  codegen: '#10b981',
-  code: '#34d399',
-  test: '#fb923c',
-  done: '#10b981',
+const TAG_VARIANTS = {
+  terminal: 'outline',
+  file: 'secondary',
+  security: 'destructive',
+  codegen: 'cyber',
+  code: 'default',
+  test: 'secondary',
+  done: 'cyber',
 }
 
-export default function Checklist({ arch, state, feats }) {
+export default function Checklist({ projectName, arch, state, feats }) {
   const [checked, setChecked] = useState({})
-  const items = buildChecklist(arch, state, feats)
+  const items = buildChecklist(projectName, arch, state, feats)
   const doneCount = Object.values(checked).filter(Boolean).length
+  const progress = (doneCount / items.length) * 100
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <div>
-          <div className={styles.title}>Setup Checklist</div>
-          <div className={styles.sub}>{arch} · {state} · {feats.length} features</div>
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-card/40 p-6 rounded-3xl border border-border/50">
+        <div className="space-y-1">
+          <h2 className="text-2xl font-bold tracking-tight">Setup Checklist</h2>
+          <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground uppercase tracking-widest">
+            <span>{arch}</span>
+            <span className="opacity-30">/</span>
+            <span>{state}</span>
+            <span className="opacity-30">/</span>
+            <span className="text-primary">{feats.length} features</span>
+          </div>
         </div>
-        <div className={styles.progress}>
-          <span className={styles.progressCount}>{doneCount}/{items.length}</span>
-          <div className={styles.progressBar}>
-            <div className={styles.progressFill} style={{ width: `${(doneCount/items.length)*100}%` }} />
+        
+        <div className="flex flex-col items-end gap-2 shrink-0">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-bold font-mono">{doneCount} / {items.length}</span>
+            <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Completed</span>
+          </div>
+          <div className="w-48 h-2 bg-secondary rounded-full overflow-hidden border border-border/30">
+            <div 
+              className="h-full bg-primary shadow-[0_0_10px_rgba(0,212,255,0.5)] transition-all duration-500 ease-out" 
+              style={{ width: `${progress}%` }} 
+            />
           </div>
         </div>
       </div>
 
-      <div className={styles.list}>
+      <div className="grid grid-cols-1 gap-3">
         {items.map((item, i) => {
-          const done = !!checked[i]
-          const color = TAG_COLORS[item.tag] || '#64748b'
+          const isDone = !!checked[i]
           return (
             <div
               key={i}
-              className={`${styles.item} ${done ? styles.itemDone : ''}`}
+              className={cn(
+                "group flex items-center gap-4 p-4 rounded-2xl border transition-all cursor-pointer select-none",
+                isDone 
+                  ? "bg-primary/5 border-primary/20 opacity-70" 
+                  : "bg-card/20 border-border/50 hover:border-primary/40 hover:bg-card/40"
+              )}
               onClick={() => setChecked(c => ({ ...c, [i]: !c[i] }))}
             >
-              <div className={`${styles.checkbox} ${done ? styles.checkboxDone : ''}`}>
-                {done && '✓'}
-              </div>
-              <span className={styles.itemText}>{item.text}</span>
-              <span className={styles.tag} style={{ color, borderColor: color + '44' }}>
-                {item.tag}
+              <Checkbox 
+                checked={isDone} 
+                className="w-5 h-5 rounded-md border-2 border-border group-hover:border-primary/50"
+              />
+              <span className={cn(
+                "flex-1 text-sm font-medium transition-all",
+                isDone ? "line-through text-muted-foreground" : "text-foreground"
+              )}>
+                {item.text}
               </span>
+              <Badge 
+                variant={TAG_VARIANTS[item.tag] || 'outline'}
+                className="font-mono text-[9px] uppercase tracking-wider h-5"
+              >
+                {item.tag}
+              </Badge>
             </div>
           )
         })}
 
-        <div className={styles.tip}>
-          💡 Setelah download .zip, extract lalu:
-          {' '}<code className={styles.code}>cd my_app && flutter pub get</code>
+        <div className="mt-4 p-5 rounded-2xl bg-secondary/30 border border-border/40 flex gap-4 items-start">
+          <div className="p-2 rounded-lg bg-primary/10 text-primary">
+            <Info className="w-4 h-4" />
+          </div>
+          <div className="space-y-2">
+            <p className="text-xs font-semibold text-muted-foreground">Quick Start Tip</p>
+            <p className="text-sm leading-relaxed text-foreground/80">
+              Setelah download .zip, extract lalu jalankan: 
+              <code className="ml-2 px-2 py-0.5 bg-black/40 rounded border border-border/50 text-primary font-mono text-xs">
+                cd {projectName} && flutter pub get
+              </code>
+            </p>
+          </div>
         </div>
       </div>
     </div>

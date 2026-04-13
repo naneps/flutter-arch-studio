@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import styles from './App.module.css'
 import AnimatedBackground from './components/AnimatedBackground.jsx'
 import ConfigPanel from './components/ConfigPanel.jsx'
 import CustomCursor from './components/CustomCursor.jsx'
 import GitHubModal from './components/GitHubModal.jsx'
 import Header from './components/Header.jsx'
 import OutputPanel from './components/OutputPanel.jsx'
+import SuccessModal from './components/SuccessModal.jsx'
 import WelcomeModal from './components/WelcomeModal.jsx'
 import { useDownload } from './hooks/useDownload.js'
 import { useProjectConfig } from './hooks/useProjectConfig.js'
@@ -19,7 +19,7 @@ export default function App() {
     feats, toggleFeat,
     files
   } = useProjectConfig()
-  const { download, downloading } = useDownload()
+  const { download, downloading, showSuccess, setShowSuccess } = useDownload()
   const [showWelcome, setShowWelcome] = useState(true)
   const [showGitHub, setShowGitHub] = useState(false)
   const [theme, setTheme] = useState('dark')
@@ -36,7 +36,10 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    root.setAttribute('data-theme', theme);
   }, [theme])
 
   const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
@@ -55,7 +58,7 @@ export default function App() {
   }
 
   return (
-    <div className={styles.app}>
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-background text-foreground font-display selection:bg-primary/30">
       <CustomCursor />
       <AnimatedBackground />
 
@@ -63,8 +66,15 @@ export default function App() {
         <WelcomeModal onClose={() => setShowWelcome(false)} />
       )}
 
+      {showSuccess && (
+        <SuccessModal
+          projectName={projectName}
+          orgName={orgName}
+          onClose={() => setShowSuccess(false)}
+        />
+      )}
+
       {showGitHub && (() => {
-        console.log('Rendering GitHubModal!')
         return (
           <GitHubModal
             onClose={() => setShowGitHub(false)}
@@ -73,6 +83,14 @@ export default function App() {
           />
         )
       })()}
+
+      {showSuccess && (
+        <SuccessModal
+          projectName={projectName}
+          orgName={orgName}
+          onClose={() => setShowSuccess(false)}
+        />
+      )}
 
       <Header
         arch={arch}
@@ -84,7 +102,7 @@ export default function App() {
         onShare={handleShare}
       />
 
-      <div className={styles.body}>
+      <main className="flex-1 flex overflow-hidden relative">
         <ConfigPanel
           projectName={projectName} setProjectName={setProjectName}
           orgName={orgName} setOrgName={setOrgName}
@@ -92,20 +110,18 @@ export default function App() {
           state={state} setState={setState}
           feats={feats} toggleFeat={toggleFeat}
           onDownload={() => download(files)}
-          onPushGithub={() => {
-            console.log('GitHub Push Button Clicked!')
-            setShowGitHub(true)
-          }}
+          onPushGithub={() => setShowGitHub(true)}
           downloading={downloading}
           onHelp={() => setShowWelcome(true)}
         />
         <OutputPanel
+          projectName={projectName}
           files={files}
           arch={arch}
           state={state}
           feats={feats}
         />
-      </div>
+      </main>
     </div>
   )
 }

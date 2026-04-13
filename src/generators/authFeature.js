@@ -1,6 +1,26 @@
 // ── Auth Feature File Generators ──
 
-export function genUserEntity() {
+export function genUserEntity(feats = []) {
+  const useCodegen = feats.includes('codegen');
+
+  if (useCodegen) {
+    return `import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'user.freezed.dart';
+
+@freezed
+class User with _\$User {
+  const factory User({
+    required String id,
+    required String email,
+    required String name,
+    String? avatar,
+    String? token,
+  }) = _User;
+}
+`;
+  }
+
   return `import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
@@ -83,7 +103,31 @@ class LoginParams extends Equatable {
 `
 }
 
-export function genUserModel() {
+export function genUserModel(feats = []) {
+  const useCodegen = feats.includes('codegen');
+
+  if (useCodegen) {
+    return `import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../domain/entities/user.dart';
+
+part 'user_model.freezed.dart';
+part 'user_model.g.dart';
+
+@freezed
+class UserModel with _\$UserModel {
+  const factory UserModel({
+    required String id,
+    required String email,
+    required String name,
+    String? avatar,
+    String? token,
+  }) = _UserModel;
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => _\$UserModelFromJson(json);
+}
+`;
+  }
+
   return `import '../../domain/entities/user.dart';
 
 class UserModel extends User {
